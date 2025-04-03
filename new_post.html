@@ -7,23 +7,75 @@
     <link rel="stylesheet" type="text/css" href="./styles.css" />
 
     <script>
+      // OUTSIDE OF LOADED
+      let postId = -1;
+
+      // RUN ON DOM LOAD
+      document.addEventListener("DOMContentLoaded", () => {
+        console.log("[BLOG][POST] ON DOM LOADED");
+
+        // CHECK THE URL
+        let params = new URLSearchParams(window.location.search);
+
+        // TRY TO GET ID FROM PARAMS
+        postId = params.get("id");
+
+        // GOT POST ID FOR LOAD? GREAT!
+        if (postId != -1) {
+          // GET ALL THE POSTS
+          let posts = JSON.parse(localStorage.getItem("blog_posts")) || [];
+
+          // TRY TO FIND THE MATCHING ONE
+          let post = posts.find((p) => p.id == postId);
+
+          // GOT POST MATCHING THAT ID? GOOD!
+          if (post) {
+            // SET THE POST ELEMENTS ON THE DOM
+            document.getElementById("edit_title").value = post.title;
+            document.getElementById("content").textContent = post.content;
+
+            document.getElementById(
+              "edit_instruction"
+            ).textContent = `Edit ${post.title}`;
+          }
+        }
+      });
+
       function savePost() {
-        let title = document.getElementById("title").value;
+        let title = document.getElementById("edit_title").value;
         let content = document.getElementById("content").value;
         let image = document.getElementById("image").files[0];
         let reader = new FileReader();
 
         reader.onload = function () {
+          // GET ALL POSTS
           let posts = JSON.parse(localStorage.getItem("blog_posts")) || [];
+
+          // DETERMINE NEW POST ID OR EDIT
+          let save_post_id = Date.now();
+
+          // ATTEMPT DELETE BEFORE RE-ADD
+          if (postId && (postId != -1)) {
+            posts = posts.filter((p) => p.id != postId);
+            localStorage.setItem("blog_posts", JSON.stringify(posts));
+
+            save_post_id = postId;
+          }
+
+          // ADD NEW (OR NEW VERSION OF OLD)
           posts.push({
-            id: Date.now(),
+            id: save_post_id,
             title,
             content,
             image: image ? reader.result : null,
             date: new Date().toISOString(),
           });
+
+          console.log(`[NEW_EDIT] SAVED [${save_post_id}]`);
+
+          // STORE SERIALIZED
           localStorage.setItem("blog_posts", JSON.stringify(posts));
-          window.location.href = "index.html";
+          window.location.href = `post.html?id=${save_post_id}`;
         };
 
         if (image) {
@@ -35,12 +87,15 @@
     </script>
   </head>
   <body>
-    <h1>Create a New <strike>Blob</strike> Blog Post</h1>
-    <input type="text" id="title" placeholder="Title" /><br/>
-    <textarea id="content" placeholder="Content" style="height: 20em"></textarea><br/>
-    <input type="file" id="image" /><br/>    
-    <button onclick="savePost()">Save</button><br/>
-    <hr/>
+    <h1 id="edit_instruction">
+      Create a New Flawed <strike>Blob</strike> Blog Post
+    </h1>
+    <input type="text" id="edit_title" placeholder="Title" /><br />
+    <textarea id="content" placeholder="Content" style="height: 20em"></textarea
+    ><br />
+    <input type="file" id="image" /><br />
+    <button onclick="savePost()">Save</button><br />
+    <hr />
     <button onclick="location.href='index.html'">Cancel</button>
   </body>
 </html>

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Blog Home</title>
+    <title>Claw's Flawed Blob Blog Home</title>
     <link rel="stylesheet" type="text/css" href="./styles.css" />
 
     <script>
@@ -16,6 +16,13 @@
           new URLSearchParams(window.location.search).get(
             "behave_like_blog_owner"
           ) === "true";
+
+        // DEMO HACK, ALWAYS ENABLE IT, BECAUSE IT'S A PAIN IN THE ASS
+        console.log(
+          "[DEMO] HACK - ALWAYS ENABLE OWNER MODE BECAUSE IT'S A PAIN IN THE ASS TO TEST WITHOUT IT"
+        );
+        behaveLikeOwner = true;
+
         document.getElementById("butt_new_post").style.display = behaveLikeOwner
           ? "inline-block"
           : "none";
@@ -50,13 +57,31 @@
     </script>
   </head>
   <body>
-    <h1><strike>Blog</strike> Blog Index</h1>
+    <h1>Claw's Flawed<br /><strike>Blob</strike> Blog Index</h1>
     <b>The home page of all things green!</b>
     <button onclick="location.href='new_post.html'" id="butt_new_post">
-      New Post
+      Add New Post
     </button>
     <hr />
     <input type="text" id="search" placeholder="Search by title..." />
     <ul id="blog_list"></ul>
+
+    <div id="important_note">
+      <h5>!!! IMPORTANT NOTE !!!</h5>
+      After the deadline I realized the ?behave_like_blog_owner=true was an absolute nightmare
+      to use while testing the blog and wasn't part of the requirements, or even very good/clever (after the fact I realized I shhould have stored the login in localStorage so it could be set once and forgotten about), so I ripped it out.
+      <br />
+      <br />
+
+      I also discovered a typo in the url  to new_post.html which made it impossible to test rest of the site parts that did work, <i>and</i> discovered      
+      I completely forgot the 'Edit Post' functionality!<br />
+      <br />
+
+      So while I was back in the guts making it possible & easier to test, I made it a <i>little less ugly</i> in a few areas.<br />
+      All these changes will be in a single commit called post_deadline_fixes.<br/>
+      <br/>
+
+      <i>Definitely</i> not one of my better moments, but sometimes things just go wrong, eh?
+    </div>
   </body>
 </html>

@@ -1,7 +1,7 @@
 /* APOLOGIES */
 @font-face {
-  font-family: 'BlobFont';
-  src: url('./font/Bubble.ttf') format('truetype');
+  font-family: "BlobFont";
+  src: url("./font/Bubble.ttf") format("truetype");
 }
 
 /* QUICK AND DIRTY RESET */
@@ -10,7 +10,7 @@
   padding: 0;
   box-sizing: border-box;
   text-align: center;
-  font-family: 'BlobFont';
+  font-family: "BlobFont";
   font-weight: normal !important;
 }
 
@@ -24,14 +24,30 @@
 body {
   font-family: Arial, sans-serif;
   line-height: 1.6;
-  padding: 20px;
-  background-color: var( --col_dark);
+  width: 50%;
+  margin-inline: auto;
+  padding: 30px;
+  background-color: var(--col_dark);
   color: var(--col_b);
   text-align: center;
 }
 
+a:hover {
+  color: var(--col_bg);   
+}
+
+a,
+a:active,
+a:visited {
+  color: var(--col_a);
+}
+
 h1 {
   margin-bottom: 20px;
+}
+
+#post_wrap {
+  padding: 40px;
 }
 
 button {
@@ -42,6 +58,8 @@ button {
   cursor: pointer;
   margin: 5px;
   border-radius: 5px;
+  width: 100%;
+  max-width: 600px;
 }
 
 button:hover {
@@ -80,29 +98,49 @@ img {
   border-radius: 5px;
 }
 
+hr {
+  margin-inline: auto;
+  max-width: 600px;
+}
+
 /* RESPOND TO SCREEN SIZE CHANGE */
 @media (max-width: 384px) {
   body {
-    padding: 30px;
+    padding: 10px;
+    margin: 0px;
+    width: 100%;
   }
   button {
     width: 100%;
+    padding: 40px 50px;
   }
-  input,
-  textarea {
-    width: 100%;
+  #post_wrap {
+    padding: 10px;
   }
 }
 
 @media (max-width: 768px) {
   body {
-    padding: 10px;
+    padding: 20px;
+    margin: 0px;
+    width: 100%;
   }
   button {
     width: 100%;
+    padding: 20px 30px;
   }
-  input,
-  textarea {
-    width: 90%;
+  #post_wrap {
+    padding: 20px;
   }
+}
+
+#important_note {
+  border: 8px solid slategray;
+  background-color: darkslateblue;
+  color:lightgray;
+  margin-inline: auto;
+  width: 100%;
+  max-width: 600px;
+  padding: 30px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }

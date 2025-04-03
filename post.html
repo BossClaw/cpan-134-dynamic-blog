@@ -48,6 +48,13 @@
 
         // SHOW 'LOGGED IN OWNER LIKE' BEHAVIOUR
         let behaveLikeOwner = params.get("behave_like_blog_owner") === "true";
+
+        // DEMO HACK, ALWAYS ENABLE IT, BECAUSE IT'S A PAIN IN THE ASS
+        console.log(
+          "[DEMO] HACK - ALWAYS ENABLE OWNER MODE BECAUSE IT'S A PAIN IN THE ASS TO TEST WITHOUT IT"
+        );
+        behaveLikeOwner = true;
+
         document.getElementById("edit_btn").style.display = behaveLikeOwner
           ? "inline-block"
           : "none";
@@ -73,19 +80,23 @@
     <hr />
 
     <!-- EMPTY DOM ELEMENTS FOR POST -->
-    <h1 id="title"></h1>
-    <p id="content"></p>
-    
+    <div id="post_wrap">
+      <h1 id="title"></h1>
+      <p id="content"></p>
+    </div>
+
     <!-- OWNER BUTTS ONLY VISIBLE IF URM PARAM-->
     <button
       id="edit_btn"
-      onclick="location.href='new-post.html?id=' + new URLSearchParams(window.location.search).get('id')"
+      onclick="location.href='new_post.html?id=' + new URLSearchParams(window.location.search).get('id')"
     >
       Edit
     </button>
 
-    <button id="delete_btn" onclick="del_post()">Delete Blog Post!!!</button>
+    <button id="delete_btn" onclick="del_post()">
+      Delete Blob Blog Post!!!
+    </button>
 
-    <img id="image" style="max-width: 50%; margin-inline: auto;" />
+    <img id="image" style="max-width: 50%; margin-inline: auto" />
   </body>
 </html>
