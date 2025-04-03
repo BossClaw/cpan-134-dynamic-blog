@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog Home</title>
+    <link rel="stylesheet" type="text/css" href="./blog.css" />
+
+    <script>
+      // RUN ON DOM LOAD
+      document.addEventListener("DOMContentLoaded", () => {
+        console.log("[BLOG][POST] ON DOM LOADED");
+
+        // EVAL OWNER
+        let behaveLikeOwner =
+          new URLSearchParams(window.location.search).get(
+            "behave_like_blog_owner"
+          ) === "true";
+        document.getElementById("butt_new_post").style.display = behaveLikeOwner
+          ? "inline-block"
+          : "none";
+        loadPosts();
+
+        // QUICK & DIRTY SEARCH ONLY THE TITLE
+        const searchInput = document.getElementById("search");
+        const blogList = document.getElementById("blog_list");
+
+        searchInput.addEventListener("input", () => {
+          const query = searchInput.value.toLowerCase();
+          const posts = blogList.getElementsByTagName("li");
+
+          Array.from(posts).forEach((post) => {
+            const title = post.textContent.toLowerCase();
+            post.style.display = title.includes(query) ? "block" : "none";
+          });
+        });
+      });
+
+      // LOAD THE POSTS FROM LOCAL STORAGE
+      function loadPosts() {
+        let posts = JSON.parse(localStorage.getItem("blog_posts")) || [];
+        let list = document.getElementById("blog_list");
+        list.innerHTML = posts
+          .map(
+            (post) =>
+              `<li><a href="post.html?id=${post.id}">${post.title}</a></li>`
+          )
+          .join("");
+      }
+    </script>
+  </head>
+  <body>
+    <h1><strike>Blog</strike> Blog Index</h1>
+    <button onclick="location.href='new_post.html'" id="butt_new_post">
+      New Post
+    </button>
+    <hr />
+    <input type="text" id="search" placeholder="Search by title..." />
+    <ul id="blog_list"></ul>
+  </body>
+</html>
