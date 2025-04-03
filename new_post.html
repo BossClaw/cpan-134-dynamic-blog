@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New Post</title>
+    <link rel="stylesheet" type="text/css" href="./blog.css" />
+
+    <script>
+      function savePost() {
+        let title = document.getElementById("title").value;
+        let content = document.getElementById("content").value;
+        let image = document.getElementById("image").files[0];
+        let reader = new FileReader();
+
+        reader.onload = function () {
+          let posts = JSON.parse(localStorage.getItem("blog_posts")) || [];
+          posts.push({
+            id: Date.now(),
+            title,
+            content,
+            image: image ? reader.result : null,
+            date: new Date().toISOString(),
+          });
+          localStorage.setItem("blog_posts", JSON.stringify(posts));
+          window.location.href = "index.html";
+        };
+
+        if (image) {
+          reader.readAsDataURL(image);
+        } else {
+          reader.onload();
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Create New Post</h1>
+    <input type="text" id="title" placeholder="Title" />
+    <textarea id="content" placeholder="Content"></textarea>
+    <input type="file" id="image" />
+    <button onclick="savePost()">Save</button>
+    <button onclick="location.href='index.html'">Cancel</button>
+  </body>
+</html>
