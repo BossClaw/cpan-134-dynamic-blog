@@ -1,0 +1,14 @@
+
+1) Create logic to read/write from localstorage, some single vals and an array of blog posts
+
+2) Create logic to check url for 'behave_like_blog_owner' to dynamically show / hide buttons like it was logged in
+
+3a) Create an index to display posts w/dyn owner buttons
+3b) Add a filter by name
+3c) TBD - add a filter by post content
+
+4a) Add a post view
+4b) Manipulate the DOM to fill in blog details.
+
+5a) Add Edit / Delete view
+5b) Remember the Adrian-Johnson / Foxy Boxes proj for in-mem image stuff
