@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>View Post</title>
+    <link rel="stylesheet" type="text/css" href="./blog.css" />
+
+    <script>
+      // RUN ON DOM LOAD
+      document.addEventListener("DOMContentLoaded", () => {
+        console.log("[BLOG][POST] ON DOM LOADED");
+
+        // CHECK THE URL
+        let params = new URLSearchParams(window.location.search);
+
+        // TRY TO GET ID FROM PARAMS
+        let postId = params.get("id");
+
+        // NO POST ID? REDIR TO HOME
+        if (!postId) {
+          console.log("[BLOG] NO ID TO FIND POST WITH!");
+          window.location.href = "index.html";
+          return;
+        }
+
+        // GET ALL THE POSTS
+        let posts = JSON.parse(localStorage.getItem("blog_posts")) || [];
+
+        // TRY TO FIND THE MATCHING ONE
+        let post = posts.find((p) => p.id == postId);
+
+        // NO POST MATCHING THAT ID? REDIR TO HOME
+        // V2DO - MESG & BUTTON
+        if (!post) {
+          window.location.href = "index.html";
+          return;
+        }
+
+        // SET THE POST ELEMENTS ON THE DOM
+        document.title = post.title;
+        document.getElementById("title").textContent = post.title;
+        document.getElementById("content").textContent = post.content;
+
+        if (post.image) {
+          document.getElementById("image").src = post.image;
+        }
+
+        // SHOW 'LOGGED IN OWNER LIKE' BEHAVIOUR
+        let behaveLikeOwner = params.get("behave_like_blog_owner") === "true";
+        document.getElementById("edit_btn").style.display = behaveLikeOwner
+          ? "inline-block"
+          : "none";
+        document.getElementById("delete_btn").style.display = behaveLikeOwner
+          ? "inline-block"
+          : "none";
+      });
+
+      // DEL POST FUNTION
+      function del_post() {
+        let params = new URLSearchParams(window.location.search);
+        let postId = params.get("id");
+        let posts = JSON.parse(localStorage.getItem("blog_posts")) || [];
+        posts = posts.filter((p) => p.id != postId);
+        localStorage.setItem("blog_posts", JSON.stringify(posts));
+        window.location.href = "index.html";
+      }
+    </script>
+  </head>
+
+  <body>
+    <button onclick="location.href='index.html'">Index</button>
+    <hr />
+
+    <!-- EMPTY DOM ELEMENTS FOR POST -->
+    <h1 id="title"></h1>
+    <p id="content"></p>
+    
+    <!-- OWNER BUTTS ONLY VISIBLE IF URM PARAM-->
+    <button
+      id="edit_btn"
+      onclick="location.href='new-post.html?id=' + new URLSearchParams(window.location.search).get('id')"
+    >
+      Edit
+    </button>
+
+    <button id="delete_btn" onclick="del_post()">Delete</button>
+
+    <img id="image" style="max-width: 50%; margin-inline: auto;" />
+  </body>
+</html>
