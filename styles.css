@@ -1,9 +1,17 @@
+/* APOLOGIES */
+@font-face {
+  font-family: 'BlobFont';
+  src: url('./font/Bubble.ttf') format('truetype');
+}
+
 /* QUICK AND DIRTY RESET */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   text-align: center;
+  font-family: 'BlobFont';
+  font-weight: normal !important;
 }
 
 :root {
@@ -73,6 +81,19 @@ img {
 }
 
 /* RESPOND TO SCREEN SIZE CHANGE */
+@media (max-width: 384px) {
+  body {
+    padding: 30px;
+  }
+  button {
+    width: 100%;
+  }
+  input,
+  textarea {
+    width: 100%;
+  }
+}
+
 @media (max-width: 768px) {
   body {
     padding: 10px;
